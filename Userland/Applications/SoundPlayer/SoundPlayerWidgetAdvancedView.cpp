@@ -159,8 +159,7 @@ void SoundPlayerWidgetAdvancedView::set_playlist_visible(bool visible)
 
 void SoundPlayerWidgetAdvancedView::play_state_changed(Player::PlayState state)
 {
-    m_back_button->set_enabled(playlist().size() > 1);
-    m_next_button->set_enabled(playlist().size() > 1);
+    sync_previous_next_buttons();
 
     switch (state) {
     case PlayState::NoFileLoaded:
@@ -190,8 +189,19 @@ void SoundPlayerWidgetAdvancedView::play_state_changed(Player::PlayState state)
     }
 }
 
+void SoundPlayerWidgetAdvancedView::sync_previous_next_buttons()
+{
+    m_back_button->set_enabled(playlist().size() > 1 && shuffle_mode() != ShuffleMode::Shuffling);
+    m_next_button->set_enabled(playlist().size() > 1);
+}
+
 void SoundPlayerWidgetAdvancedView::loop_mode_changed(Player::LoopMode)
 {
+}
+
+void SoundPlayerWidgetAdvancedView::shuffle_mode_changed(Player::ShuffleMode)
+{
+    sync_previous_next_buttons();
 }
 
 void SoundPlayerWidgetAdvancedView::time_elapsed(int seconds)

@@ -8,6 +8,7 @@
 #include "Playlist.h"
 
 #include <AK/LexicalPath.h>
+#include <AK/Random.h>
 #include <LibAudio/Loader.h>
 #include <LibGUI/MessageBox.h>
 
@@ -74,7 +75,10 @@ StringView Playlist::next()
         m_next_index_to_play = 0;
     }
     auto next = m_model->items().at(m_next_index_to_play).path;
-    m_next_index_to_play++;
+    if (shuffling())
+        m_next_index_to_play = get_random_uniform(size());
+    else
+        m_next_index_to_play++;
     return next;
 }
 

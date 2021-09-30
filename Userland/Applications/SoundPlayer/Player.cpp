@@ -88,6 +88,14 @@ void Player::set_loop_mode(LoopMode mode) {
     }
 }
 
+void Player::set_shuffle_mode(ShuffleMode mode) {
+    if (m_shuffle_mode != mode) {
+        m_shuffle_mode = mode;
+        m_playlist.set_shuffling(mode == ShuffleMode::Shuffling);
+        shuffle_mode_changed(mode);
+    }
+}
+
 void Player::set_volume(double volume) {
     m_volume = clamp(volume, 0, 1.0);
     m_audio_client_connection.set_self_volume(m_volume);

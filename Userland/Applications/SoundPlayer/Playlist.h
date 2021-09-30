@@ -26,11 +26,15 @@ public:
     void set_looping(bool looping) { m_looping = looping; }
     bool looping() const { return m_looping; }
 
+    void set_shuffling(bool shuffling) { m_shuffling = shuffling; }
+    bool shuffling() const { return m_shuffling; }
+
 private:
     void try_fill_missing_info(Vector<M3UEntry>&, StringView);
 
     RefPtr<PlaylistModel> m_model;
     bool m_looping { false };
+    bool m_shuffling { false };
 
     int m_next_index_to_play { 0 };
 };
