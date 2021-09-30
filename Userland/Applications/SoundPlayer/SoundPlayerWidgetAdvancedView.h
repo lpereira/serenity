@@ -21,15 +21,10 @@ class SoundPlayerWidgetAdvancedView final : public GUI::Widget
     C_OBJECT(SoundPlayerWidgetAdvancedView)
 
 public:
-    explicit SoundPlayerWidgetAdvancedView(GUI::Window& window, PlayerState& state);
-    ~SoundPlayerWidgetAdvancedView() override;
+    explicit SoundPlayerWidgetAdvancedView(GUI::Window&, Audio::ClientConnection&);
 
-    void open_file(StringView path) override;
-    void read_playlist(StringView path);
-    void play() override;
     void set_nonlinear_volume_slider(bool nonlinear);
     void set_playlist_visible(bool visible);
-    void try_fill_missing_info(Vector<M3UEntry>& entries, StringView playlist_p);
 
     template<typename T>
     void set_visualization()
@@ -40,6 +35,16 @@ public:
         m_player_view->insert_child_before(new_visualization, *static_cast<Core::Object*>(m_playback_progress_slider.ptr()));
         m_visualization = new_visualization;
     }
+
+    virtual void play_state_changed(PlayState) override;
+    virtual void loop_mode_changed(LoopMode) override;
+    virtual void time_elapsed(int) override;
+    virtual void file_name_changed(StringView) override;
+    virtual void playlist_loaded(StringView, bool) override;
+    virtual void audio_load_error(StringView path, StringView error_reason) override;
+    virtual void volume_changed(double) override;
+    virtual void total_samples_changed(int) override;
+    virtual void sound_buffer_played(RefPtr<Audio::Buffer>, int sample_rate, int samples_played) override;
 
 protected:
     void keydown_event(GUI::KeyEvent&) override;
@@ -65,7 +70,7 @@ private:
     RefPtr<GUI::Button> m_next_button;
     RefPtr<AutoSlider> m_playback_progress_slider;
     RefPtr<GUI::Label> m_volume_label;
+    RefPtr<GUI::Label> m_timestamp_label;
 
     bool m_nonlinear_volume_slider;
-    size_t m_device_sample_rate { 44100 };
 };
