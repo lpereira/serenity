@@ -8,7 +8,7 @@
 
 #include <LibGUI/Slider.h>
 
-class AutoSlider final : public GUI::Slider {
+class AutoSlider : public GUI::Slider {
     C_OBJECT(AutoSlider)
 public:
     ~AutoSlider() override = default;
@@ -21,7 +21,7 @@ public:
 
     bool mouse_is_down() const { return m_mouse_is_down; }
 
-private:
+protected:
     AutoSlider(Orientation orientation)
         : GUI::Slider(orientation)
     {
@@ -42,5 +42,6 @@ private:
         GUI::Slider::mouseup_event(event);
     }
 
+private:
     bool m_mouse_is_down { false };
 };

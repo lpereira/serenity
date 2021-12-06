@@ -1,14 +1,17 @@
 /*
  * Copyright (c) 2018-2020, Andreas Kling <kling@serenityos.org>
  * Copyright (c) 2021, the SerenityOS developers.
+ * Copyright (c) 2021, L. A. F. Pereira <l@tia.mat.br>
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
+#include "AmpPlayerView.h"
 #include "BarsVisualizationWidget.h"
 #include "NoVisualizationWidget.h"
 #include "Player.h"
 #include "SampleWidget.h"
+#include "Skin.h"
 #include "SoundPlayerWidgetAdvancedView.h"
 #include <LibAudio/ClientConnection.h>
 #include <LibCore/System.h>
@@ -39,7 +42,7 @@ ErrorOr<int> serenity_main(Main::Arguments arguments)
     window->set_icon(app_icon.bitmap_for_size(16));
 
     // start in advanced view by default
-    Player* player = TRY(window->try_set_main_widget<SoundPlayerWidgetAdvancedView>(window, audio_client));
+    Player* player = TRY(window->try_set_main_widget<AmpPlayerView>(window, audio_client));
     if (arguments.argc > 1) {
         StringView path = arguments.strings[1];
         player->play_file_path(path);

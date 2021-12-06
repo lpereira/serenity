@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2021, the SerenityOS developers.
- * Copyright (c) 2021, Leandro A. F. Pereira <leandro@tia.mat.br>
+ * Copyright (c) 2021, L. A. F. Pereira <l@tia.mat.br>
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
